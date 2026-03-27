@@ -135,7 +135,9 @@ app.get("/test-session", (req, res) => {
 // GOOGLE LOGIN
 // --------------------
 app.get("/auth/google", (req, res) => {
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=openid%20email%20profile%20https://www.googleapis.com/auth/drive`;
+    const scope = encodeURIComponent("openid email profile https://www.googleapis.com/auth/drive");
+
+    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_REDIRECT_URI}&response_type=code&scope=${scope}&access_type=offline&prompt=consent`;
     res.redirect(url);
 });
 
