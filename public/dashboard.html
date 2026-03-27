@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nilmay SOC Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="/public/dashboard.css">
+</head>
+
+<body>
+
+    <input type="radio" name="page-view" id="view-overview" checked style="display:none;">
+    <input type="radio" name="page-view" id="view-protection" style="display:none;">
+    <input type="radio" name="page-view" id="view-remote" style="display:none;">
+    <input type="radio" name="page-view" id="view-monitoring-plans" style="display:none;">
+    <input type="radio" name="page-view" id="view-SoftwareDeployment-plans" style="display:none;">
+    <input type="radio" name="page-view" id="view-cloud-backup" style="display:none;">
+    <input type="radio" name="page-view" id="view-dr-dashboard" style="display:none;">
+    <input type="radio" name="page-view" id="view-dr-servers" style="display:none;">
+    <input type="radio" name="page-view" id="view-connectivity" style="display:none;">
+    <input type="radio" name="page-view" id="view-runbooks" style="display:none;">
+    <input type="radio" name="page-view" id="view-dr-connectivity" style="display:none;">
+    <input type="radio" name="page-view" id="view-dr-runbooks" style="display:none;">
+    <input type="checkbox" id="user-menu-toggle" style="display:none;">
+    
+    <div class="sidebar">
+    <div class="logo">
+        <div class="logo-wrapper">
+            <img src="/public/logo.png" alt="Nilmay" class="sidebar-logo-img">
+        </div>
+    </div>
+
+    <ul class="menu">
+        </ul>
+
+        <input type="checkbox" id="toggle-monitoring" hidden checked>
+        <input type="checkbox" id="toggle-management" hidden>
+        <input type="checkbox" id="toggle-dr" hidden>
+        <ul class="menu">
+            <li class="has-submenu">
+                <label for="toggle-monitoring" class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-eye"></i>
+                        <span>Monitoring</span>
+                    </div>
+                    <i class="fa fa-chevron-down arrow-icon"></i>
+                </label>
+
+                <ul class="submenu monitoring-list">
+                    <li>
+                        <label for="view-overview" class="menu-item" onclick="showPage('overview-page')">
+                            <i class="fa fa-chart-pie"></i> Overview
+                        </label>
+                    </li>
+                    <li>
+                        <div class="menu-item"><i class="fa fa-bell"></i> Alerts</div>
+                    </li>
+                    <li>
+                        <div class="menu-item"><i class="fa fa-history"></i> Activities</div>
+                    </li>
+                    <li>
+                        <div class="menu-item"><i class="fa fa-bolt"></i> Threat feed</div>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-laptop"></i>
+                        <span>Devices</span>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-cloud"></i>
+                        <span>Microsoft 365</span>
+                    </div>
+                </div>
+            </li>
+
+            <li class="has-submenu">
+                <label for="toggle-management" class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-cogs"></i>
+                        <span>Management</span>
+                    </div>
+                    <i class="fa fa-chevron-down arrow-icon"></i>
+                </label>
+
+                <ul class="submenu management-list">
+                    <li>
+                        <label for="view-protection" class="menu-item" onclick="showPage('protection-page')">
+                            <i class="fa fa-shield-halved"></i> Protection plans
+                        </label>
+                    </li>
+                    <li>
+                        <label for="view-remote" class="menu-item" onclick="showPage('remote-page')">
+                            <i class="fa fa-network-wired"></i> Remote management
+                        </label>
+                    </li>
+                    <li>
+                        <label for="view-monitoring-plans" class="menu-item" onclick="showPage('monitoring-plans-page')">
+                            <i class="fa fa-code"></i> Monitoring Plans
+                        </label>
+                    </li>
+                    <li>
+                        <label for="view-SoftwareDeployment-plans" class="menu-item" onclick="showPage('SoftwareDeployment-plans-page')">
+                            <i class="fa fa-rocket"></i> Software Deployment Plans
+                        </label>
+                    </li>
+                    <li>
+                        <label for="view-cloud-backup" class="menu-item" onclick="showPage('cloud-backup-page')">
+                            <i class="fa fa-cloud"></i> Cloud Application Backup
+                        </label>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-box"></i>
+                        <span>Software</span>
+                    </div>
+                </div>
+            </li>
+            <li class="has-submenu">
+                <label for="toggle-dr" class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-cloud-arrow-up"></i>
+                        <span>Disaster Recovery</span>
+                    </div>
+                    <i class="fa fa-chevron-down arrow-icon"></i>
+                 </label>
+
+  <ul class="submenu dr-list">
+    <li>
+        <label for="view-dr-dashboard" class="menu-item">
+            <i class="fa fa-chart-line"></i> Recovery
+        </label>
+    </li>
+</ul>          </li>
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-envelope"></i>
+                        <span>Email Security</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-shield-halved"></i>
+                        <span>Protection</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-database"></i>
+                        <span>Backup Storage</span>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="menu-item">
+                    <div class="menu-content">
+                        <i class="fa fa-gear"></i>
+                        <span>Settings</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            Powered by Acronis Cyber Platform
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div id="overview-page">
+            <div class="top-header">
+    <h1 class="page-title">Overview</h1>
+    <p id="lastUpdatedText" style="font-size:12px; color:#64748b; margin-top:4px;">
+    Last updated: just now
+</p>
+     <h2 id="userName" style="font-size:14px; font-weight:500; color:#64748b; margin-top:10px;">
+    Loading user identity...
+</h2>
+    <div class="header-right-section">
+        <i class="fa-regular fa-circle-question icon-btn"></i>
+        <label for="user-menu-toggle" class="user-menu-wrapper">
+            <i class="fa-regular fa-circle-user icon-btn user-active-icon"></i>
+            
+            <div class="user-dropdown">
+                <div class="user-info-header">Service Team</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item">
+                    Change language <i class="fa fa-globe"></i>
+                </div>
+                <div class="dropdown-item">My privacy settings</div>
+                <div class="dropdown-item">Downloads</div>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-item logout" id="logoutIcon">Log out</div>
+            </div>
+        </label>
+    </div>
+</div>
+
+<div class="overview-stats-section">
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Total Backups</p>
+        <h3 id="totalBackupsCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Successful Backups</p>
+        <h3 id="successfulBackupsCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Failed Backups</p>
+        <h3 id="failedBackupsCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Total Restores</p>
+        <h3 id="totalRestoresCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Successful Restores</p>
+        <h3 id="successfulRestoresCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Failed Restores</p>
+        <h3 id="failedRestoresCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Files Restored</p>
+        <h3 id="totalFilesRestoredCount">0</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Restore Success Rate</p>
+        <h3 id="restoreSuccessRateCount">0%</h3>
+    </div>
+
+    <div class="overview-stat-card">
+        <p class="overview-stat-label">Total Backed-up Files</p>
+        <h3 id="totalBackedUpFilesCount">0</h3>
+    </div>
+</div>
+
+            <div class="grid">
+                <div class="card1">
+                    <div class="card-title">Protection Status</div>
+                    <div class="chart-box">
+                        <canvas id="protectionChart"></canvas>
+                        <div class="center-text">Machines</div>
+                    </div>
+                </div>
+                <div class="card2">
+                    <div class="card-title">Outbound sensitive data categories</div>
+                    <div class="chart-box">
+                        <canvas id="outboundChart"></canvas>
+                    </div>
+                </div>
+                <div class="card3">
+                    <div class="card-title">Sensitive Data Transfer</div>
+                    <div class="chart-box">
+                        <canvas id="transferChart"></canvas>
+                        <div class="center-text1">109 Transfers</div>
+                    </div>
+                </div>
+                <div class="card4">
+                    <div class="card-title">Active alert summary</div>
+                    <div class="chart-box">
+                        <canvas id="alertChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+<div id="protection-page">
+    <div class="top-header">
+        <h1 class="page-title">Protection plans</h1>
+        <div class="header-icons">
+            <i class="fa-regular fa-circle-question icon-btn"></i>
+            <i class="fa-regular fa-circle-user icon-btn"></i>
+        </div>
+    </div>
+    
+    <div class="protection-layout">
+        <div class="backup-monitor-card">
+
+<h2>Live Backup Monitor</h2>
+
+<div class="backup-info">
+<p>Current File: <b id="backupFile">-</b></p>
+<p>Status: <b id="backupStatus">IDLE</b></p>
+</div>
+
+<div class="backup-progress">
+
+<p>Backup Progress</p>
+
+<div class="progress-container">
+<div id="backupProgressBar" class="progress-bar"></div>
+</div>
+
+<p id="backupPercent">0%</p>
+
+</div>
+
+<div class="backup-stage">
+    <p>Stage: <span id="backupStage">Waiting...</span></p>
+</div>
+
+<div class="backup-stats">
+    <p>Total Files: <b id="backupTotalFiles">0</b></p>
+    <p>Uploaded: <b id="backupUploadedCount">0</b></p>
+    <p>Skipped: <b id="backupSkippedCount">0</b></p>
+</div>
+
+</div>
+
+        <aside class="right-floating-actions">
+            <h3 class="actions-title">Actions</h3>
+<div class="action-link">
+    <li>
+        <label for="modal-toggle" class="action-row">
+            <i class="fa fa-plus"></i>
+            <h2>Backup</h2>
+
+            <input type="file" id="folderPicker" webkitdirectory directory multiple />
+
+            <br><br>
+
+            <button id="startBackupBtn">Start Backup</button>
+            <button id="stopBackupBtn">Stop Backup</button>
+
+            <p id="selectedFolder">No folder selected</p>
+        </label>
+    </li>
+</div>
+            <div class="action-link disabled">
+                <i class="fa-regular fa-star"></i>
+                <span>Manage favorites</span>
+            </div>
+        </aside>
+    </div>
+</div>
+    
+<input type="checkbox" id="modal-toggle" style="display:none;">
+
+<div class="modal-overlay">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h2>Create protection plan</h2>
+            <label for="modal-toggle" class="modal-close">&times;</label>
+        </div>
+        <div class="modal-body">
+            <p>Select a template for your protection plan.</p>
+            
+            <div class="template-item">
+                <input type="radio" name="plan-type" id="complete" checked>
+                <label for="complete">
+                    <div class="item-title">Complete protection <span class="badge-rec">Recommended</span></div>
+                    <p>Third level of protection: Business continuity, near-zero RPOs, proactive mitigation of security risks, data leaks prevention and compliance</p>
+                </label>
+            </div>
+
+            <div class="template-item">
+                <input type="radio" name="plan-type" id="extended">
+                <label for="extended">
+                    <div class="item-title">Extended protection</div>
+                    <p>Second level of protection: Business continuity, proactive mitigation of security risks and compliance</p>
+                </label>
+            </div>
+
+            <div class="template-item">
+                <input type="radio" name="plan-type" id="essential">
+                <label for="essential">
+                    <div class="item-title">Essential protection</div>
+                    <p>First level of protection: Minimal downtime and data loss, effortless recovery with short RPO and easy maintenance</p>
+                </label>
+            </div>
+
+            <div class="template-item">
+                <input type="radio" name="plan-type" id="backup-only">
+                <label for="backup-only">
+                    <div class="item-title">Backup entire workload</div>
+                    <p>Backup entire workload to cloud storage</p>
+                </label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <label for="modal-toggle" class="btn-secondary">Cancel</label>
+            <button type="button" class="btn-primary">Next</button>
+        </div>
+    </div>
+</div>
+    <div id="remote-page" style="display:none;">
+            <div class="table-container" style="margin-top: 20px;">
+    <div class="table-toolbar" style="display:flex; gap:20px; padding:15px; color:#3b82f6; font-size:14px; border-bottom: 1px solid #eee;">
+        <span><i class="fa fa-clock-rotate-left"></i> Backup History</span>
+        <span style="margin-left:auto; color:#888;" id="backupHistoryCount">Loaded: 0</span>
+    </div>
+
+    <table class="protection-table" id="backupHistoryTable">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Relative Path</th>
+                <th>Size</th>
+                <th>Uploaded Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="backupHistoryTableBody">
+            <tr>
+                <td colspan="5" style="text-align:center; color:#64748b; padding:20px;">
+                    No backup history loaded yet
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+        </div>
+<div id="dr-runbooks-page">
+    <div class="top-header">
+        <h1 class="page-title">Disaster Recovery Runbooks</h1>
+        <div class="header-icons">
+            <i class="fa-regular fa-circle-question icon-btn"></i>
+            <i class="fa-regular fa-circle-user icon-btn"></i>
+        </div>
+    </div>
+    <div class="table-container">
+        <div class="table-toolbar">
+            <span class="toolbar-link"><i class="fa fa-plus"></i> Create Runbook</span>
+            <span class="toolbar-info">Total: 3 Runbooks</span>
+        </div>
+        <table class="protection-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Steps</th>
+                    <th>Last Execution</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Full Site Failover</td>
+                    <td>12 Steps</td>
+                    <td>Jan 15, 2026</td>
+                    <td><span class="badge" style="background:#dcfce7; color:#166534;">Verified</span></td>
+                </tr>
+                <tr>
+                    <td>Database Recovery</td>
+                    <td>5 Steps</td>
+                    <td>Feb 02, 2026</td>
+                    <td><span class="badge" style="background:#fef9c3; color:#854d0e;">Draft</span></td>
+                </tr>
+                <tr>
+                    <td>Critical Web App</td>
+                    <td>8 Steps</td>
+                    <td>Never</td>
+                    <td><span class="badge" style="background:#fee2e2; color:#991b1b;">Not Tested</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+        <div id="monitoring-plans-page" style="display:none;">
+            <div class="top-header">
+                <h1 class="page-title">Monitoring plans</h1>
+                <div class="header-icons">
+                    <i class="fa-regular fa-circle-question icon-btn"></i>
+                    <i class="fa-regular fa-circle-user icon-btn"></i>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-toolbar" style="display:flex; gap:20px; padding:15px; color:#3b82f6; font-size:14px; border-bottom: 1px solid #eee;">
+                    <span><i class="fa fa-sliders"></i> Filter</span>
+                    <span><i class="fa fa-search"></i> Search</span>
+                    <span style="margin-left:auto; color:#888;">Loaded: 1 / Total: 1</span>
+                </div>
+                <table class="protection-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>Name <i class="fa fa-arrow-up"></i></th>
+                            <th>Workloads</th>
+                            <th>Status</th>
+                            <th>Creation date</th>
+                            <th>Plan owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Hardware Change</td>
+                            <td>8</td>
+                            <td>
+                                <div class="status-bar">
+                                    <div class="bar green" style="width: 100%"></div>
+                                </div>
+                            </td>
+                            <td>Aug 8, 2025, 2:09 PM</td>
+                            <td>Nilmay System</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="SoftwareDeployment-plans-page" style="display:none;">
+            <div class="top-header">
+                <h1 class="page-title">Software Deployment Plans</h1>
+                <div class="header-icons">
+                    <i class="fa-regular fa-circle-question icon-btn"></i>
+                    <i class="fa-regular fa-circle-user icon-btn"></i>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-toolbar" style="display:flex; gap:20px; padding:15px; color:#3b82f6; font-size:14px; border-bottom: 1px solid #eee;">
+                    <span><i class="fa fa-sliders"></i> Filter</span>
+                    <span><i class="fa fa-search"></i> Search</span>
+                    <span style="margin-left:auto; color:#888;">Loaded: 1 / Total: 1</span>
+                </div>
+                <table class="protection-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>Name <i class="fa fa-arrow-up"></i></th>
+                            <th>Workloads</th>
+                            <th>Status</th>
+                            <th>Creation date</th>
+                            <th>Plan owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Software Deployment Plan</td>
+                            <td>8</td>
+                            <td>
+                                <div class="status-bar">
+                                    <div class="bar green" style="width: 100%"></div>
+                                </div>
+                            </td>
+                            <td>Aug 8, 2025, 2:09 PM</td>
+                            <td>Nilmay System</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+<div id="dr-dashboard-page">
+
+<div class="top-header">
+    <h1 class="page-title">Recovery</h1>
+    <div class="header-icons">
+        <i class="fa-regular fa-circle-question icon-btn"></i>
+        <i class="fa-regular fa-circle-user icon-btn"></i>
+    </div>
+</div>
+
+<div class="restore-grid">
+
+<!-- LEFT PANEL -->
+<div class="restore-card">
+
+<h2>Start Recovery</h2>
+
+<div class="restore-section">
+
+<label>Select Backup</label>
+<select id="restoreBackupId">
+<option value="">Choose Backup</option>
+</select>
+
+<p id="retryAvailabilityText" style="margin-top:8px; font-size:13px; color:#64748b;">
+    Retry status: Not checked
+</p>
+
+<p id="retryResultText" style="margin-top:6px; font-size:13px; color:#64748b;">
+    Retry result: No retry started
+</p>
+
+</div> 
+
+<div class="restore-section">
+
+<label>Restore Type</label>
+
+<div class="restore-type">
+    <input type="radio" name="restoreType" id="restoreTypeFull" value="full" checked>
+    <span>Full Restore</span>
+</div>
+
+<div class="restore-type">
+    <input type="radio" name="restoreType" id="restoreTypeFile" value="file">
+    <span>File Level Restore</span>
+</div>
+
+<div class="restore-type">
+    <input type="radio" name="restoreType" id="restoreTypePoint" value="point">
+    <span>Point In Time</span>
+</div>
+
+
+</div>
+<div class="restore-section" id="fileRestoreSection" style="display:none;">
+    <label>Select File</label>
+    <select id="restoreFilePath">
+        <option value="">Choose File</option>
+    </select>
+</div>
+
+<div class="restore-section">
+
+<label>Destination</label>
+
+<select id="restoreDestination">
+<option value="original">Original Location</option>
+<option value="custom">Custom Location</option>
+</select>
+
+</div>
+
+<button id="startRestoreBtn" class="restore-start-btn">
+Start Recovery
+</button>
+
+<button id="retryFailedBtn" class="restore-start-btn" style="margin-top:10px; display:none; background:#f59e0b;">
+Retry Failed Files
+</button>
+
+<button id="stopRestoreBtn" class="restore-start-btn" style="margin-top:10px; background:#ef4444;">
+Cancel Recovery
+</button>
+
+</div>
+
+
+<!-- RIGHT PANEL -->
+<div class="restore-right-panel">
+
+<div class="restore-card">
+
+<h2>Active Recovery Jobs</h2>
+
+<div class="restore-progress-box">
+
+<div id="restoreJobTitle">
+No active restore job
+</div>
+
+<div class="restore-progress-bar-container">
+<div id="restoreProgressBar" class="restore-progress-bar"></div>
+</div>
+
+<div class="restore-progress-text">
+
+<span id="restorePercent">0%</span>
+
+<span id="restoreRemaining">
+Waiting to start
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="restore-card">
+
+<h2>Recovery History</h2>
+
+<table class="restore-history-table">
+
+<thead>
+<tr>
+<th>Job</th>
+<th>Version</th>
+<th>Type</th>
+<th>Status</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<div class="restore-history-scroll">
+    <table class="restore-history-table">
+        <thead>...</thead>
+        <tbody id="restoreHistoryTableBody"></tbody>
+    </table>
+</div>
+
+
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div id="dr-servers-page">
+    <div class="top-header">
+        <h1 class="page-title">Disaster Recovery Servers</h1>
+        <div class="header-icons">
+            <i class="fa-regular fa-circle-question icon-btn"></i>
+            <i class="fa-regular fa-circle-user icon-btn"></i>
+        </div>
+    </div>
+    <div class="table-container">
+        <table class="protection-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Recovery Point</th>
+                    <th>Network</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>App-Server-01</td>
+                    <td>2 mins ago</td>
+                    <td>192.168.1.10</td>
+                    <td><span class="badge" style="background:#dcfce7; color:#166534;">Standby</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="dr-connectivity-page">
+    <div class="top-header">
+        <h1 class="page-title">Connectivity Settings</h1>
+        <div class="header-icons">
+            <i class="fa-regular fa-circle-question icon-btn"></i>
+            <i class="fa-regular fa-circle-user icon-btn"></i>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card1">
+            <div class="card-title">VPN Configuration</div>
+            <div class="conn-content">
+                <div class="conn-row">
+                    <span>VPN Status</span>
+                    <span class="status-indicator online">Active</span>
+                </div>
+                <div class="conn-row">
+                    <span>Gateway IP</span>
+                    <span class="code-text">203.0.113.45</span>
+                </div>
+                <div class="conn-row">
+                    <span>Tunnel Type</span>
+                    <span>Site-to-Site (IPsec)</span>
+                </div>
+                <button class="btn-primary" style="margin-top: 15px; width: 100%;">Configure VPN</button>
+            </div>
+        </div>
+        <div class="card2">
+            <div class="card-title">Cloud Edge Settings</div>
+            <div class="conn-content">
+                <div class="conn-row">
+                    <span>Cloud Region</span>
+                    <span>US-East-1 (Primary)</span>
+                </div>
+                <div class="conn-row">
+                    <span>Public IP</span>
+                    <span class="code-text">34.212.10.88</span>
+                </div>
+                <div class="conn-row">
+                    <span>DNS Suffix</span>
+                    <span>dr.nilmay.com</span>
+                </div>
+                <button class="btn-secondary" style="margin-top: 15px; width: 100%;">View Edge Logs</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <div id="cloud-backup-page" style="display:none;">
+            <div class="top-header">
+                <h1 class="page-title">Cloud Application Backup</h1>
+                <div class="header-icons">
+                    <i class="fa-regular fa-circle-question icon-btn"></i>
+                    <i class="fa-regular fa-circle-user icon-btn"></i>
+                </div>
+            </div>
+            <div class="table-container">
+                <div class="table-toolbar" style="display:flex; gap:20px; padding:15px; color:#888; font-size:14px; border-bottom: 1px solid #eee;">
+                    <span><i class="fa fa-search"></i> Search by name</span>
+                    <span style="margin-left:auto;">Loaded: 2</span>
+                </div>
+                <table class="protection-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;"><input type="checkbox"></th>
+                            <th>Type</th>
+                            <th>Name <i class="fa fa-arrow-up"></i></th>
+                            <th>What to back up</th>
+                            <th>Devices</th>
+                            <th>Schedule</th>
+                            <th>Destination</th>
+                            <th>Account</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td><i class="fa-solid fa-copy" style="color: #64748b;"></i></td>
+                            <td>Microsoft 365 mailboxes to Clou...</td>
+                            <td>Microsoft 365 mailb...</td>
+                            <td>15</td>
+                            <td>6 times a day</td>
+                            <td>Cloud storage</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td><i class="fa-solid fa-copy" style="color: #64748b;"></i></td>
+                            <td>OneDrive to Cloud storage (5)</td>
+                            <td>OneDrive</td>
+                            <td>13</td>
+                            <td>6 times a day</td>
+                            <td>Cloud storage</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Tab Switching logic
+        function showPage(pageId) {
+            const pages = [
+                'overview-page',
+                'protection-page',
+                'remote-page',
+                'monitoring-plans-page',
+                'SoftwareDeployment-plans-page',
+                'cloud-backup-page'
+            ];
+            pages.forEach(id => {
+                document.getElementById(id).style.display = (id === pageId) ? 'block' : 'none';
+            });
+        }
+
+        // Shared Chart Configuration
+        const donutOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "75%",
+            plugins: {
+                legend: {
+                    position: "right",
+                    labels: {
+                        color: "#444",
+                        font: { size: 11 }
+                    }
+                }
+            }
+        };
+
+        // Protection Chart
+        new Chart(document.getElementById("protectionChart"), {
+            type: "doughnut",
+            data: {
+                labels: ["Protected", "Unprotected", "Managed", "Discovered"],
+                datasets: [{
+                    data: [65, 10, 15, 10],
+                    backgroundColor: ["#22c55e", "#ef4444", "#3b82f6", "#aaa"],
+                    borderWidth: 0
+                }]
+            },
+            options: donutOptions
+        });
+
+        new Chart(document.getElementById("outboundChart"), {
+            type: "doughnut",
+            data: {
+                labels: ["Nilmay", "Health info", "Identifiable", "Office files"],
+                datasets: [{
+                    data: [30, 25, 20, 25],
+                    backgroundColor: ["#22c55e", "#3b82f6", "#60a5fa", "#9333ea"],
+                    borderWidth: 0
+                }]
+            },
+            options: donutOptions
+        });
+
+        new Chart(document.getElementById("transferChart"), {
+            type: "doughnut",
+            data: {
+                labels: ["Allowed"],
+                datasets: [{
+                    data: [100],
+                    backgroundColor: ["#22c55e"],
+                    borderWidth: 0
+                }]
+            },
+            options: donutOptions
+        });
+
+        new Chart(document.getElementById("alertChart"), {
+            type: "doughnut",
+            data: {
+                labels: ["Backup Failed", "Offline 30 days", "Cyber Protection", "Phishing", "Malicious Email", "Spam"],
+                datasets: [{
+                    data: [5, 15, 10, 20, 30, 20],
+                    backgroundColor: ["#ef4444", "#f97316", "#eab308", "#22c55e", "#3b82f6", "#aaa"],
+                    borderWidth: 0
+                }]
+            },
+            options: donutOptions
+        });
+    </script>
+     <script>
+  fetch("http://localhost:5000/api/google-user")
+
+    .then(res => res.json())
+    .then(data => {
+      console.log("Google User Data:", data);
+    })
+    .catch(err => {
+      console.error("Error fetching user:", err);
+    });
+</script>
+<script>
+fetch("/api/google-user", {
+    credentials: "include"   // IMPORTANT: send session cookie
+})
+.then(res => res.json())
+.then(data => {
+    console.log("Google User:", data);   // for debugging
+
+    if (data.name) {
+        document.getElementById("userName").innerText = data.name;
+    } else {
+        document.getElementById("userName").innerText = "Guest User";
+    }
+})
+.catch(err => {
+    console.error("Fetch error:", err);
+    document.getElementById("userName").innerText = "Not Logged In";
+});
+</script>
+
+<script>
+    const logoutIcon = document.getElementById("logoutIcon");
+
+    if (logoutIcon) {
+        logoutIcon.addEventListener("click", () => {
+            window.location.href = "/logout";
+        });
+    }
+</script>
+<script>
+fetch("/api/restore/dashboard")
+  .then(res => res.json())
+  .then(data => {
+    if (!data.success) return;
+
+    const d = data.dashboard;
+
+    // Health
+    document.getElementById("restoreHealth").innerText = d.analytics.health.systemHealth;
+    document.getElementById("restoreRisk").innerText = "Risk Level: " + d.riskLevel;
+
+    // Stats
+    document.getElementById("totalRestores").innerText = d.analytics.totals.totalRestores;
+    document.getElementById("validRestores").innerText = d.analytics.totals.validRestores;
+    document.getElementById("corruptedRestores").innerText = d.analytics.totals.corruptedRestores;
+    document.getElementById("successRate").innerText = d.analytics.health.successRatePercent;
+    document.getElementById("trustScore").innerText = d.analytics.trust.averageTrustScore;
+
+  })
+  .catch(err => {
+    console.error("Restore dashboard error:", err);
+  });
+</script>
+<script>
+
+// ===============================
+// LIVE BACKUP MONITORING
+// ===============================
+
+const backupSocket = new WebSocket("ws://localhost:5000");
+
+backupSocket.onopen = () => {
+    console.log("🟢 Backup Monitoring Connected");
+};
+
+backupSocket.onmessage = (event) => {
+
+    try {
+
+        const data = JSON.parse(event.data);
+
+        console.log("📦 Backup Event RAW:", JSON.stringify(data, null, 2));
+
+        if (data.type === "backup-update") {
+
+            const update = data.payload;
+
+            // Current File
+            const file = document.getElementById("backupFile");
+            if (file && update.file) {
+                file.innerText = update.file;
+            }
+
+            // Status
+            const status = document.getElementById("backupStatus");
+            if (status && update.status) {
+                status.innerText = update.status.toUpperCase();
+            }
+
+            // Progress Bar
+            const progressBar = document.getElementById("backupProgressBar");
+            if (progressBar && update.progress !== undefined) {
+                progressBar.style.width = update.progress + "%";
+            }
+
+            // Percent Text
+            const percent = document.getElementById("backupPercent");
+            if (percent && update.progress !== undefined) {
+                percent.innerText = update.progress + "%";
+            }
+            // Stage
+            const stage = document.getElementById("backupStage");
+            if (stage && update.stage) {
+                stage.innerText = update.stage;
+            }
+            
+            const totalFilesEl = document.getElementById("backupTotalFiles");
+            if (totalFilesEl && update.totalFiles !== undefined) {
+                totalFilesEl.innerText = update.totalFiles;
+            }
+
+            const uploadedCountEl = document.getElementById("backupUploadedCount");
+            if (uploadedCountEl && update.uploadedCount !== undefined) {
+                uploadedCountEl.innerText = update.uploadedCount;
+            }
+
+            const skippedCountEl = document.getElementById("backupSkippedCount");
+            if (skippedCountEl && update.skippedCount !== undefined) {
+                skippedCountEl.innerText = update.skippedCount;
+            }
+
+        }
+
+    } catch (err) {
+        console.error("Backup socket parse error:", err);
+    }
+
+};
+
+backupSocket.onerror = (err) => {
+    console.error("Backup WebSocket error:", err);
+};
+
+backupSocket.onclose = () => {
+    console.log("🔴 Backup Monitoring Disconnected");
+};
+// ===============================
+// LIVE RESTORE MONITORING
+// ===============================
+
+const restoreSocket = new WebSocket("ws://localhost:5000");
+
+restoreSocket.onopen = () => {
+    console.log("🟢 Restore Monitoring Connected");
+};
+
+restoreSocket.onmessage = (event) => {
+    try {
+        const data = JSON.parse(event.data);
+
+        console.log("📦 Restore Event RAW:", JSON.stringify(data, null, 2));
+
+        if (data.type === "backup-update" && data.payload?.type === "restore-update") {
+            const update = data.payload.payload;
+
+            const jobTitle = document.getElementById("restoreJobTitle");
+            if (jobTitle && update.file) {
+                jobTitle.innerText = `Restoring: ${update.file}`;
+            }
+
+            const progressBar = document.getElementById("restoreProgressBar");
+            if (progressBar && update.progress !== undefined) {
+                progressBar.style.width = update.progress + "%";
+            }
+
+            const percent = document.getElementById("restorePercent");
+            if (percent && update.progress !== undefined) {
+                percent.innerText = update.progress + "%";
+            }
+
+            const remaining = document.getElementById("restoreRemaining");
+            if (remaining && update.stage) {
+                remaining.innerText = update.status === "completed"
+                    ? "Recovery completed"
+                    : update.stage;
+            }
+        }
+    } catch (err) {
+        console.error("Restore socket parse error:", err);
+    }
+};
+
+restoreSocket.onerror = (err) => {
+    console.error("Restore WebSocket error:", err);
+};
+
+restoreSocket.onclose = () => {
+    console.log("🔴 Restore Monitoring Disconnected");
+};
+
+</script>
+<script>
+document.getElementById("startBackupBtn").addEventListener("click", async () => {
+    try {
+        const folderPicker = document.getElementById("folderPicker");
+        const files = folderPicker.files;
+
+        if (!files || files.length === 0) {
+            alert("Please select a folder first");
+            return;
+        }
+
+        const formData = new FormData();
+
+        for (const file of files) {
+            formData.append("files", file);
+            formData.append("relativePaths", file.webkitRelativePath);
+        }
+
+        const lastBackupId = null;
+
+        formData.append("provider", "google");
+
+        const response = await fetch("/api/upload-selected-folder", {
+            method: "POST",
+            credentials: "include",
+            body: formData
+        });
+
+        const result = await response.json();
+console.log("Selected folder upload route test:", result);
+
+if (result.stopped) {
+    document.getElementById("backupStatus").innerText = "STOPPED";
+    document.getElementById("backupStage").innerText = "stopped";
+    document.getElementById("backupTotalFiles").innerText = result.totalFiles ?? 0;
+    document.getElementById("backupUploadedCount").innerText = result.uploadedCount ?? 0;
+    document.getElementById("backupSkippedCount").innerText = result.skippedCount ?? 0;
+
+    alert(
+        `Backup stopped by user\n\nBackup ID: ${result.backupId}\nTotal Files: ${result.totalFiles}\nUploaded: ${result.uploadedCount}\nSkipped: ${result.skippedCount}`
+    );
+
+    await loadBackupHistory();
+} else if (result.success) {
+    localStorage.setItem("lastBackupId", result.backupId);
+
+    document.getElementById("backupStatus").innerText = "COMPLETED";
+    document.getElementById("backupStage").innerText =
+        (result.skippedCount > 0 && result.uploadedCount === 0)
+            ? "already backed up"
+            : "completed";
+
+    document.getElementById("backupTotalFiles").innerText = result.totalFiles ?? 0;
+    document.getElementById("backupUploadedCount").innerText = result.uploadedCount ?? 0;
+    document.getElementById("backupSkippedCount").innerText = result.skippedCount ?? 0;
+
+    alert(
+        `Backup completed\n\nBackup ID: ${result.backupId}\nTotal Files: ${result.totalFiles}\nUploaded: ${result.uploadedCount}\nSkipped (already backed up): ${result.skippedCount}`
+    );
+
+    await loadBackupHistory();
+} 
+else {
+        if (result.failedFiles && result.failedFiles.length > 0) {
+
+        const failedList = result.failedFiles
+            .map(f => `${f.relativePath} → ${f.reason}`)
+            .join("\n");
+
+        alert(
+            `Backup completed with failures\n\nFailed Files:\n${failedList}`
+        );
+
+    } else {
+        alert(result.message || "Backup failed");
+    }
+}
+
+    } catch (error) {
+        console.error("Selected folder upload test failed:", error);
+    }
+});
+</script>
+
+<script>
+document.getElementById("stopBackupBtn").addEventListener("click", async () => {
+    try {
+        const response = await fetch("/api/stop-backup", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+        console.log("Stop backup response:", result);
+
+        if (result.success) {
+            alert("Backup stop request sent successfully");
+        } else {
+            alert(result.message || "Failed to stop backup");
+        }
+
+    } catch (error) {
+        console.error("Stop backup failed:", error);
+        alert("Stop backup request failed");
+    }
+});
+</script>
+
+<script>
+async function loadRestoreFilesForBackup(backupId) {
+    const fileDropdown = document.getElementById("restoreFilePath");
+
+    if (!fileDropdown) return;
+
+    fileDropdown.innerHTML = `<option value="">Choose File</option>`;
+
+    if (!backupId) return;
+
+    try {
+        const response = await fetch("/api/backup/history", {
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (!data.success || !data.history) return;
+
+        const files = data.history.filter(item => item.backupId === backupId);
+
+        files.forEach((item) => {
+            const option = document.createElement("option");
+            option.value = item.relativePath;
+            option.textContent = item.relativePath;
+            fileDropdown.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error("Failed to load restore files:", error);
+    }
+}
+
+document.getElementById("restoreBackupId").addEventListener("change", async (e) => {
+    const backupId = e.target.value;
+
+    loadRestoreFilesForBackup(backupId);
+
+    const retryResultText = document.getElementById("retryResultText");
+if (retryResultText) {
+    retryResultText.innerText = "Retry result: No retry started";
+    retryResultText.style.color = "#64748b";
+}
+    const retryBtn = document.getElementById("retryFailedBtn");
+
+    if (!backupId) {
+        if (retryText) {
+            retryText.innerText = "Retry status: Not checked";
+        }
+        if (retryBtn) {
+            retryBtn.style.display = "none";
+        }
+        return;
+    }
+
+    const retryInfo = await checkRetryAvailability(backupId);
+    console.log("Selected backup retry info:", retryInfo);
+
+    if (retryText) {
+        retryText.innerText = retryInfo?.retryAvailable
+            ? "Retry status: Failed files available for retry"
+            : "Retry status: No failed files to retry";
+    }
+
+    if (retryBtn) {
+        retryBtn.style.display = retryInfo?.retryAvailable ? "block" : "none";
+    }
+});
+</script>
+
+<script>
+function toggleFileRestoreSection() {
+    const selectedType = document.querySelector('input[name="restoreType"]:checked')?.value;
+    const fileSection = document.getElementById("fileRestoreSection");
+
+    if (!fileSection) return;
+
+    fileSection.style.display = selectedType === "file" ? "block" : "none";
+}
+
+document.querySelectorAll('input[name="restoreType"]').forEach((radio) => {
+    radio.addEventListener("change", toggleFileRestoreSection);
+});
+
+toggleFileRestoreSection();
+</script>
+
+<script>
+const folderPicker = document.getElementById("folderPicker");
+const selectedFolderText = document.getElementById("selectedFolder");
+
+if (folderPicker && selectedFolderText) {
+    folderPicker.addEventListener("change", () => {
+        const files = folderPicker.files;
+
+        if (!files || files.length === 0) {
+            selectedFolderText.innerText = "No folder selected";
+            return;
+        }
+
+        const firstFile = files[0];
+        const relativePath = firstFile.webkitRelativePath || "";
+        const folderName = relativePath.split("/")[0] || "Selected Folder";
+
+        selectedFolderText.innerText = `${folderName} (${files.length} files selected)`;
+    });
+}
+</script>
+
+<script>
+async function loadBackupHistory() {
+    try {
+        const response = await fetch("/api/backup/history", {
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        const tableBody = document.getElementById("backupHistoryTableBody");
+        const countText = document.getElementById("backupHistoryCount");
+
+        if (!tableBody || !countText) return;
+
+        if (!data.success || !data.history || data.history.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center; color:#64748b; padding:20px;">
+                        No backup history found
+                    </td>
+                </tr>
+            `;
+            countText.innerText = "Loaded: 0";
+            return;
+        }
+
+        countText.innerText = `Loaded: ${data.history.length}`;
+
+        tableBody.innerHTML = data.history
+        .sort((a,b) => new Date(b.uploadedAt) - new Date(a.uploadedAt))
+        .map(item => {
+            return `
+                <tr>
+                    <td>${item.fileName || "-"}</td>
+                    <td>${item.relativePath || "-"}</td>
+                    <td>${formatFileSize(item.size)}</td>
+                    <td>${formatBackupTime(item.uploadedAt)}</td>
+                    <td>
+    <span style="
+        background:${item.status === 'completed' ? '#dcfce7' : '#fee2e2'};
+        color:${item.status === 'completed' ? '#166534' : '#991b1b'};
+        padding:4px 10px;
+        border-radius:6px;
+        font-size:12px;
+        font-weight:600;
+        text-transform:capitalize;
+    ">
+        ${item.status || "-"}
+    </span>
+</td>
+                </tr>
+            `;
+        }).join("");
+      
+        await loadOverviewStats(); 
+
+    } catch (error) {
+        console.error("Backup history load error:", error);
+
+        const tableBody = document.getElementById("backupHistoryTableBody");
+        const countText = document.getElementById("backupHistoryCount");
+
+        if (tableBody) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center; color:#ef4444; padding:20px;">
+                        Failed to load backup history
+                    </td>
+                </tr>
+            `;
+        }
+
+        if (countText) {
+            countText.innerText = "Loaded: 0";
+        }
+    }
+}function formatBackupTime(time) {
+    const date = new Date(time);
+
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'short' });
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${day} ${month} ${year} • ${hours}:${minutes}`;
+}
+
+function truncateText(text, maxLength = 15) {
+    if (!text) return "-";
+    return text.length > maxLength
+        ? text.substring(0, maxLength) + "..."
+        : text;
+}
+
+function getShortBackupName(backupId) {
+    if (!backupId) return "-";
+    return backupId.substring(0, 12) + "...";
+}
+
+function formatFileSize(bytes) {
+    if (bytes === 0) return "0 B";
+
+    const sizes = ["B", "KB", "MB", "GB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+
+    const value = bytes / Math.pow(1024, i);
+
+    return value.toFixed(1).replace(".0","") + " " + sizes[i];
+}
+loadBackupHistory();
+loadRestoreBackupDropdown();
+loadRestoreHistory();
+
+async function checkRetryAvailability(backupId) {
+    try {
+        const response = await fetch(`/api/backup/retry-available/${backupId}`, {
+            credentials: "include"
+        });
+
+        const data = await response.json();
+        console.log("Retry availability:", data);
+
+        return data;
+    } catch (error) {
+        console.error("Retry availability check failed:", error);
+        return null;
+    }
+}
+async function loadRestoreBackupDropdown() {
+    console.log("Loading restore backup dropdown...");
+
+    const dropdown = document.getElementById("restoreBackupId");
+    console.log("Restore dropdown element:", dropdown);
+
+    if (!dropdown) return;
+
+    dropdown.innerHTML = `<option value="">Choose Backup</option>`;
+
+    const response = await fetch("http://localhost:5000/api/backup/history", {
+        credentials: "include"
+    });
+
+    const data = await response.json();
+    console.log("Restore backup history API:", data);
+    console.log("First backup item JSON:", JSON.stringify(data.history[0], null, 2));
+    
+    // Group by backupId
+const backupMap = {};
+
+data.history.forEach((item) => {
+    if (!backupMap[item.backupId]) {
+        backupMap[item.backupId] = item;
+    }
+});
+
+// Create dropdown options (one per backup)
+Object.values(backupMap).forEach((item) => {
+    const option = document.createElement("option");
+    option.value = item.backupId;
+
+    option.textContent = `Backup: ${item.backupId} • ${formatBackupTime(item.uploadedAt)}`;
+
+    dropdown.appendChild(option);
+});
+}
+async function loadRestoreHistory() {
+    try {
+        const response = await fetch("/api/restore/history", {
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        const tableBody = document.getElementById("restoreHistoryTableBody");
+
+        if (!tableBody) return;
+
+        if (!result.success || !result.history || result.history.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center;color:#64748b;padding:16px;">
+                        No restore history yet
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tableBody.innerHTML = result.history
+            .slice()
+            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+            .reverse()
+            .map(item => {
+                const status = item.status || "unknown";
+                const statusBg =
+                    status === "completed" ? "#dcfce7" :
+                    status === "failed" ? "#fee2e2" :
+                    status === "stopped" ? "#fef9c3" :
+                    "#e5e7eb";
+
+                const statusColor =
+                    status === "completed" ? "#166534" :
+                    status === "failed" ? "#991b1b" :
+                    status === "stopped" ? "#854d0e" :
+                    "#374151";
+
+                return `
+                    <tr>
+                    <td title="${item.restoreId || "-"}">
+    <div style="font-weight:600; color:#111827;">
+        ${truncateText(item.restoreId || "-", 14)}
+    </div>
+    <div style="font-size:13px; color:#374151; margin-top:4px;">
+        ${item.filePath ? item.filePath.split("/").pop() : "-"}
+    </div>
+</td>
+<td title="${item.backupId || "-"}">
+    ${getShortBackupName(item.backupId || "-")}
+</td>
+                        <td>${item.restoreType === "file" ? "File Level Restore" : "Full Restore"}</td>
+                        <td>
+                            <span style="
+                                background:${statusBg};
+                                color:${statusColor};
+                                padding:4px 10px;
+                                border-radius:6px;
+                                font-size:12px;
+                                font-weight:600;
+                            ">
+                                ${status}
+                            </span>
+                        </td>
+                        <td>${formatBackupTime(item.timestamp)}</td>
+                    </tr>
+                `;
+            })
+            .join("");
+
+    } catch (error) {
+        console.error("Restore history load error:", error);
+
+        const tableBody = document.getElementById("restoreHistoryTableBody");
+
+        if (tableBody) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center;color:#ef4444;padding:16px;">
+                        Failed to load restore history
+                    </td>
+                </tr>
+            `;
+        }
+    }
+}
+document.getElementById("startRestoreBtn").addEventListener("click", async () => {
+    console.log("Start Recovery button clicked");
+
+    const selectedBackupId = document.getElementById("restoreBackupId").value;
+    console.log("Selected backupId:", selectedBackupId);
+    const selectedRestoreType = document.querySelector('input[name="restoreType"]:checked')?.value;
+const selectedFilePath = document.getElementById("restoreFilePath")?.value || "";
+
+console.log("Selected restore type:", selectedRestoreType);
+console.log("Selected file path:", selectedFilePath);
+
+    if (!selectedBackupId) {
+        alert("Please select a backup first");
+        return;
+    }
+    if (selectedRestoreType === "file" && !selectedFilePath) {
+    alert("Please select a file for File Level Restore");
+    return;
+}
+const restoreLabel =
+    selectedRestoreType === "file"
+        ? `Restoring file: ${selectedFilePath}`
+        : `Restoring backup: ${selectedBackupId}`;
+
+document.getElementById("restoreJobTitle").innerText = restoreLabel;
+document.getElementById("restorePercent").innerText = "0%";
+document.getElementById("restoreRemaining").innerText = "Starting recovery...";
+document.getElementById("restoreProgressBar").style.width = "0%";
+
+    const response = await fetch("http://localhost:5000/api/restore-backup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            backupId: selectedBackupId,
+            restoreType: selectedRestoreType,
+            filePath: selectedFilePath
+        })
+    });
+
+    const result = await response.json();
+console.log("Restore API response:", result);
+
+if (result.stopped) {
+    document.getElementById("restoreJobTitle").innerText =
+    selectedRestoreType === "file"
+        ? `File restore stopped: ${selectedFilePath}`
+        : `Restore stopped: ${selectedBackupId}`;
+    document.getElementById("restoreRemaining").innerText = "Recovery stopped by user";
+    document.getElementById("restorePercent").innerText = "Stopped";
+
+    alert(`Recovery stopped by user\n\nBackup ID: ${result.backupId}\nFiles Restored: ${result.filesRestored}`);
+    await loadRestoreHistory();
+    await loadRestoreLifetimeStats();
+    await loadOverviewStats();
+
+} else if (result.success) {
+    document.getElementById("restoreJobTitle").innerText =
+    selectedRestoreType === "file"
+        ? `File restore completed: ${selectedFilePath}`
+        : `Restore completed: ${selectedBackupId}`;
+    document.getElementById("restorePercent").innerText = "100%";
+    document.getElementById("restoreRemaining").innerText = "Recovery completed";
+    document.getElementById("restoreProgressBar").style.width = "100%";
+
+    await loadRestoreHistory();
+    await loadRestoreLifetimeStats();
+    await loadOverviewStats();
+
+} else {
+    alert(result.message || "Restore failed");
+}
+});
+</script>
+
+<script>
+document.getElementById("retryFailedBtn").addEventListener("click", async () => {
+    try {
+        const backupId = document.getElementById("restoreBackupId").value;
+
+        if (!backupId) {
+            alert("Please select a backup first");
+            return;
+        }
+
+        const response = await fetch(`/api/backup/retry-failed/${backupId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+        console.log("Retry failed files response:", result);
+
+        if (result.success) {
+    const retryText = document.getElementById("retryAvailabilityText");
+    const retryBtn = document.getElementById("retryFailedBtn");
+    const backupId = document.getElementById("restoreBackupId").value;
+
+    const retryInfo = await checkRetryAvailability(backupId);
+
+    if (retryText) {
+        retryText.innerText = retryInfo?.retryAvailable
+            ? "Retry status: Failed files available for retry"
+            : "Retry status: No failed files to retry";
+    }
+
+    if (retryBtn) {
+        retryBtn.style.display = retryInfo?.retryAvailable ? "block" : "none";
+    }
+const retryResultText = document.getElementById("retryResultText");
+
+if (retryResultText) {
+    retryResultText.innerText = `Retry result: ${result.retriedCount} of ${result.totalRetryFiles} failed files retried`;
+    retryResultText.style.color = "#166534";
+}
+    alert(
+        `Retry completed\n\nBackup ID: ${result.backupId}\nRetried: ${result.retriedCount}/${result.totalRetryFiles}`
+    );
+} else {
+    const retryResultText = document.getElementById("retryResultText");
+
+if (retryResultText) {
+    retryResultText.innerText = `Retry result: ${result.message || "Retry failed"}`;
+    retryResultText.style.color = "#991b1b";
+}
+
+    alert(result.message || "Retry failed");
+}
+    } catch (error) {
+        console.error("Retry failed files request error:", error);
+        alert("Retry request failed");
+    }
+});
+</script>
+
+<script>
+document.getElementById("stopRestoreBtn").addEventListener("click", async () => {
+    try {
+        const response = await fetch("/api/stop-restore", {
+            method: "POST",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+        console.log("Stop restore response:", result);
+
+        if (result.success) {
+            alert("Restore stop request sent successfully");
+        } else {
+            alert(result.message || "Failed to stop restore");
+        }
+    } catch (error) {
+        console.error("Stop restore failed:", error);
+        alert("Stop restore request failed");
+    }
+});
+
+async function loadRestoreLifetimeStats() {
+    try {
+        const response = await fetch("/api/restore/lifetime-stats", {
+            credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+            console.error("Failed to load restore lifetime stats");
+            return;
+        }
+
+        document.getElementById("successfulRestoresCount").textContent =
+            data.stats.successfulRestores ?? 0;
+
+        const failed = data.stats.failedRestores ?? 0;
+
+        const failedEl = document.getElementById("failedRestoresCount");
+
+        if (failedEl) {
+            failedEl.textContent = failed;
+
+            if (failed > 0) {
+                failedEl.style.color = "#ef4444"; // red
+            } else {
+                failedEl.style.color = "#0f172a"; // normal
+            }
+        }
+
+        document.getElementById("totalFilesRestoredCount").textContent =
+            data.stats.totalFilesRestored ?? 0;
+
+    } catch (error) {
+        console.error("Restore stats error:", error);
+    }
+}
+
+async function loadOverviewStats() {
+    try {
+        const response = await fetch("/api/overview-stats");
+        const data = await response.json();
+
+        if (!data.success) {
+            console.error("Failed to load overview stats");
+            return;
+        }
+
+        document.getElementById("totalBackupsCount").textContent = data.stats.totalBackups;
+        document.getElementById("successfulBackupsCount").textContent = data.stats.successfulBackups;
+        document.getElementById("failedBackupsCount").textContent = data.stats.failedBackups;
+        document.getElementById("totalRestoresCount").textContent = data.stats.totalRestores;
+        document.getElementById("restoreSuccessRateCount").textContent = data.stats.restoreSuccessRate + "%";
+        document.getElementById("totalBackedUpFilesCount").textContent = data.stats.totalBackedUpFiles;
+    } catch (error) {
+        console.error("Overview stats fetch error:", error);
+    }
+}
+
+loadOverviewStats();
+loadRestoreLifetimeStats();
+
+// Auto refresh every 5 seconds
+setInterval(() => {
+    loadOverviewStats();
+    loadRestoreLifetimeStats();
+
+    const now = new Date();
+    const time = now.toLocaleTimeString();
+
+    const el = document.getElementById("lastUpdatedText");
+    if (el) {
+        el.innerText = `Last updated: ${time}`;
+    }
+
+}, 5000);
+
+</script>
+</body>
+</html>

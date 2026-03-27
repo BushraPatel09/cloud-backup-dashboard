@@ -1,0 +1,113 @@
+{
+  "backupSets": [
+    {
+      "id": "set_1",
+      "name": "Test Backup",
+      "rootPath": "./testFolder",
+      "createdAt": 1772429900696
+    },
+    {
+      "id": "set_1",
+      "name": "Test Backup",
+      "rootPath": "./testFolder",
+      "createdAt": 1772430254523
+    },
+    {
+      "id": "set_1",
+      "name": "Test Backup",
+      "rootPath": "./testFolder",
+      "createdAt": 1772430582395
+    },
+    {
+      "id": "set_1",
+      "name": "Test Backup",
+      "rootPath": "./testFolder",
+      "createdAt": 1772432189590
+    },
+    {
+      "id": "set_1",
+      "name": "Test Backup",
+      "rootPath": "./testFolder",
+      "createdAt": 1772432519795
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "snap_1772429913373",
+      "backupSetId": "set_1",
+      "timestamp": 1772429913373,
+      "totalFiles": 1,
+      "totalSize": 40
+    },
+    {
+      "id": "snap_1772430261082",
+      "backupSetId": "set_1",
+      "timestamp": 1772430261082,
+      "totalFiles": 1,
+      "totalSize": 40
+    },
+    {
+      "id": "snap_1772430590646",
+      "backupSetId": "set_1",
+      "timestamp": 1772430590646,
+      "totalFiles": 1,
+      "totalSize": 40
+    },
+    {
+      "id": "snap_1772432198737",
+      "backupSetId": "set_1",
+      "timestamp": 1772432198737,
+      "totalFiles": 1,
+      "totalSize": 40
+    },
+    {
+      "id": "snap_1772432536028",
+      "backupSetId": "set_1",
+      "timestamp": 1772432536028,
+      "totalFiles": 1,
+      "totalSize": 40
+    }
+  ],
+  "files": [
+    {
+      "id": "file_1772429913373_0.24382847494914106",
+      "snapshotId": "snap_1772429913373",
+      "path": "testFolder\\test-backup.txt",
+      "size": 40,
+      "hash": null,
+      "storagePath": "set_1\\snap_1772429913373\\testFolder\\test-backup.txt"
+    },
+    {
+      "id": "file_1772430261083_0.05537075313017459",
+      "snapshotId": "snap_1772430261082",
+      "path": "testFolder\\test-backup.txt",
+      "size": 40,
+      "hash": null,
+      "storagePath": "set_1\\snap_1772430261082\\test-backup.txt"
+    },
+    {
+      "id": "file_1772430590646_0.2073765181667826",
+      "snapshotId": "snap_1772430590646",
+      "path": "testFolder\\test-backup.txt",
+      "size": 40,
+      "hash": null,
+      "storagePath": "set_1\\snap_1772430590646\\test-backup.txt"
+    },
+    {
+      "id": "file_1772432198750_0.984768092589138",
+      "snapshotId": "snap_1772432198737",
+      "path": "testFolder\\test-backup.txt",
+      "size": 40,
+      "hash": "c31b3e160f7f8b1c3cb6d05fa871b8322a10b66332c0128a4fdb02e23c1c809a",
+      "storagePath": "set_1\\snap_1772432198737\\test-backup.txt"
+    },
+    {
+      "id": "file_1772432536032_0.3920521205932106",
+      "snapshotId": "snap_1772432536028",
+      "path": "testFolder\\test-backup.txt",
+      "size": 40,
+      "hash": "c31b3e160f7f8b1c3cb6d05fa871b8322a10b66332c0128a4fdb02e23c1c809a",
+      "storagePath": "set_1\\snap_1772432536028\\test-backup.txt"
+    }
+  ]
+}

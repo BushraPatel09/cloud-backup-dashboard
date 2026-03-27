@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        *{
+            box-sizing: border-box;
+            font-family: "Segoe UI", system-ui, sans-serif;
+        }
+    
+        body{
+            margin:0;
+            height:100vh;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
+        }
+ 
+        .card{
+            width:380px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding:40px 30px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5);
+            text-align:center;
+            border:1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo{
+            width:60px;
+            height:60px;
+            margin:0 auto 15px;
+            border-radius:50%;
+            background: linear-gradient(135deg,#38bdf8,#6366f1);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:bold;
+            font-size:22px;
+            box-shadow:0 0 20px rgba(99,102,241,0.6);
+        }
+
+        h1{
+            margin:10px 0 5px;
+            font-size:22px;
+            font-weight:600;
+        }
+
+        p{
+            font-size:13px;
+            opacity:0.7;
+            margin-bottom:30px;
+        }
+
+        .google-btn{
+            width:100%;
+            padding:14px;
+            border-radius:12px;
+            border:none;
+            cursor:pointer;
+            background: linear-gradient(135deg,#ffffff,#e5e7eb);
+            color:#111827;
+            font-size:15px;
+            font-weight:600;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+            transition: all 0.25s ease;
+            box-shadow:0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .google-btn:hover{
+            transform: translateY(-2px);
+            box-shadow:0 15px 35px rgba(0,0,0,0.6);
+        }
+
+        .google-icon{
+            width:18px;
+            height:18px;
+        }
+
+        .footer{
+            margin-top:25px;
+            font-size:11px;
+            opacity:0.5;
+        }
+
+        .secure{
+            margin-top:12px;
+            font-size:11px;
+            color:#22c55e;
+            opacity:0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <div class="logo">SOC</div>
+
+        <h1>Welcome Back</h1>
+        <p>Secure access to your dashboard</p>
+
+        <button class="google-btn" onclick="googleLogin()">
+            <svg class="google-icon" viewBox="0 0 533.5 544.3">
+                <path fill="#4285F4" d="M533.5 278.4c0-18.7-1.5-37.4-4.7-55.6H272v105.3h146.9c-6.3 34-25 62.7-53.3 81.9v67h86.1c50.5-46.5 81.8-115.1 81.8-198.6z"/>
+                <path fill="#34A853" d="M272 544.3c72.6 0 133.6-23.9 178.1-64.8l-86.1-67c-24 16.3-54.7 25.7-92 25.7-70.7 0-130.7-47.7-152.2-111.8H30.7v70.3C74.9 482.4 167.5 544.3 272 544.3z"/>
+                <path fill="#FBBC04" d="M119.8 326.4c-10.8-32-10.8-66.4 0-98.4V157.7H30.7c-39.4 78.7-39.4 171.3 0 250l89.1-70.3z"/>
+                <path fill="#EA4335" d="M272 107.7c39.5-.6 77.6 14.3 106.9 41.8l79.8-79.8C413.6 24.5 343.6-1.4 272 0 167.5 0 74.9 61.9 30.7 157.7l89.1 70.3C141.3 155.4 201.3 107.7 272 107.7z"/>
+            </svg>
+            Continue with Google
+        </button>
+
+        <div class="secure">🔐 Secure OAuth Authentication</div>
+
+        <div class="footer">
+            Protected by session-based backend security
+        </div>
+    </div>
+
+<script>
+    function googleLogin(){
+        window.location.href = "http://localhost:5000/auth/google";
+    }
+</script>
+
+</body>
+</html>
+ 

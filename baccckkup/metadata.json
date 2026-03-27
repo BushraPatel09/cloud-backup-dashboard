@@ -1,0 +1,79 @@
+{
+  "system": {
+    "project": "Nilmay Cloud Backup System",
+    "version": "1.0.0",
+    "environment": "development",
+    "createdAt": "2026-02-26T00:00:00Z",
+
+    "supportedProviders": [
+      "google_drive",
+      "local_disk"
+    ],
+
+    "supportedBackupTypes": [
+      "full",
+      "incremental",
+      "differential",
+      "realtime",
+      "snapshot"
+    ]
+  },
+
+  "users": [
+    {
+      "userId": "117036030532443354292",
+      "email": "bushrapatel9704@gmail.com",
+      "authProvider": "google",
+      "createdAt": "2026-02-26T00:00:00Z",
+
+      "storageProviders": [
+        {
+          "providerId": "google_drive",
+          "linked": true,
+          "linkedAt": "2026-02-26T00:00:00Z",
+          "rootFolder": "nilmay_backups"
+        }
+      ],
+
+      "backupPolicy": {
+        "defaultType": "incremental",
+        "baselineRequired": true,
+        "encryption": true,
+        "compression": false,
+        "retention": {
+          "days": 30,
+          "versions": 20
+        }
+      }
+    }
+  ],
+
+  "providers": [
+    {
+      "id": "google_drive",
+      "name": "Google Drive",
+      "type": "cloud",
+      "rootFolder": "nilmay_backups",
+      "supports": [
+        "full",
+        "incremental",
+        "differential",
+        "snapshot"
+      ]
+    }
+  ],
+
+  "backups": [],
+
+  "chains": [],
+
+  "snapshots": [],
+
+  "restorePlans": [],
+
+  "scheduler": {
+    "jobs": []
+  },
+
+  "auditLog": []
+}
