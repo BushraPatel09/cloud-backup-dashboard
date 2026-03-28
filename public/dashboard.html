@@ -1078,6 +1078,11 @@ backupSocket.onmessage = (event) => {
                 skippedCountEl.innerText = update.skippedCount;
             }
 
+            loadOverviewStats();
+            loadRestoreLifetimeStats();
+            loadBackupHistory();
+            loadRestoreHistory();
+
         }
 
     } catch (err) {
@@ -1133,6 +1138,12 @@ restoreSocket.onmessage = (event) => {
                     ? "Recovery completed"
                     : update.stage;
             }
+
+            loadOverviewStats();
+            loadRestoreLifetimeStats();
+            loadBackupHistory();
+            loadRestoreHistory();
+
         }
     } catch (err) {
         console.error("Restore socket parse error:", err);
