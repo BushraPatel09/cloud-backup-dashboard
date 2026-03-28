@@ -942,7 +942,7 @@ Waiting to start
         });
     </script>
      <script>
-  fetch("http://localhost:5000/api/google-user")
+  fetch("/api/google-user")
 
     .then(res => res.json())
     .then(data => {
@@ -1011,7 +1011,10 @@ fetch("/api/restore/dashboard")
 // LIVE BACKUP MONITORING
 // ===============================
 
-const backupSocket = new WebSocket("ws://localhost:5000");
+const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+const socketUrl = `${protocol}//${window.location.host}`;
+
+const backupSocket = new WebSocket(socketUrl);
 
 backupSocket.onopen = () => {
     console.log("🟢 Backup Monitoring Connected");
@@ -1092,7 +1095,7 @@ backupSocket.onclose = () => {
 // LIVE RESTORE MONITORING
 // ===============================
 
-const restoreSocket = new WebSocket("ws://localhost:5000");
+const restoreSocket = new WebSocket(socketUrl);
 
 restoreSocket.onopen = () => {
     console.log("🟢 Restore Monitoring Connected");
@@ -1500,7 +1503,7 @@ async function loadRestoreBackupDropdown() {
 
     dropdown.innerHTML = `<option value="">Choose Backup</option>`;
 
-    const response = await fetch("http://localhost:5000/api/backup/history", {
+    const response = await fetch("/api/backup/history", {
         credentials: "include"
     });
 
@@ -1645,7 +1648,7 @@ document.getElementById("restorePercent").innerText = "0%";
 document.getElementById("restoreRemaining").innerText = "Starting recovery...";
 document.getElementById("restoreProgressBar").style.width = "0%";
 
-    const response = await fetch("http://localhost:5000/api/restore-backup", {
+    const response = await fetch("/api/restore-backup", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
