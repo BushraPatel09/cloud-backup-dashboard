@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import dotenv from "dotenv";
 
-import { getBackupHistoryFromDb } from "./backup/backupHistoryDb.js";
+import { getBackupHistoryFromDb, addBackupHistoryToDb } from "./backup/backupHistoryDb.js";
 import { readOverviewStats, writeOverviewStats } from "./backup/overviewStatsManager.js";
 import { startBackup, requestStopBackup, getStopBackupStatus } from "./services/backupEngine.js";
 import restoreHistoryRoutes from "./routes/restoreHistory.js";
@@ -738,6 +738,18 @@ app.post("/api/upload-selected-folder", requireAuth, upload.array("files"), asyn
         // ===== TEMP DEBUG LOGS END =====
 
         const result = await uploadSelectedFolder(req, files, relativePaths, existingBackupId, provider);
+        if (result?.uploadedFiles && result.uploadedFiles.length > 0) {
+    for (const file of result.uploadedFiles) {
+        await addBackupHistoryToDb({
+            backupId: result.backupId,
+            fileName: file.fileName || file.originalname || "Unknown File",
+            relativePath: file.relativePath || file.storagePath || file.fileName || "Unknown Path",
+            size: file.size || 0,
+            uploadedAt: new Date().toISOString(),
+            status: file.status || "completed"
+        });
+    }
+}
         // ===== SAVE BACKUP HISTORY START =====
         // ===== SAVE BACKUP HISTORY START =====
 
