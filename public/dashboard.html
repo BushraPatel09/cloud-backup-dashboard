@@ -1818,22 +1818,29 @@ async function loadRestoreLifetimeStats() {
 
 async function loadOverviewStats() {
     try {
-        const response = await fetch("/api/overview-stats");
+        const response = await fetch("/api/backup/history", {
+            credentials: "include"
+        });
+
         const data = await response.json();
 
-        if (!data.success) {
-            console.error("Failed to load overview stats");
-            return;
-        }
+        if (!data.success || !data.history) return;
 
-        document.getElementById("totalBackupsCount").textContent = data.stats.totalBackups;
-        document.getElementById("successfulBackupsCount").textContent = data.stats.successfulBackups;
-        document.getElementById("failedBackupsCount").textContent = data.stats.failedBackups;
-        document.getElementById("totalRestoresCount").textContent = data.stats.totalRestores;
-        document.getElementById("restoreSuccessRateCount").textContent = data.stats.restoreSuccessRate + "%";
-        document.getElementById("totalBackedUpFilesCount").textContent = data.stats.totalBackedUpFiles;
+        const history = data.history;
+
+        const totalBackups = history.length;
+
+        const successfulBackups = history.filter(h => h.status === "completed").length;
+
+        const failedBackups = history.filter(h => h.status === "failed").length;
+
+        document.getElementById("totalBackupsCount").textContent = totalBackups;
+        document.getElementById("successfulBackupsCount").textContent = successfulBackups;
+        document.getElementById("failedBackupsCount").textContent = failedBackups;
+        document.getElementById("totalBackedUpFilesCount").textContent = totalBackups;
+
     } catch (error) {
-        console.error("Overview stats fetch error:", error);
+        console.error("Overview stats error:", error);
     }
 }
 
