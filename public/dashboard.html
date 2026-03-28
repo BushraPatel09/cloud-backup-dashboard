@@ -1312,16 +1312,17 @@ if (retryResultText) {
 }
     const retryBtn = document.getElementById("retryFailedBtn");
 
-    if (!backupId) {
-        if (retryText) {
-            retryText.innerText = "Retry status: Not checked";
-        }
-        if (retryBtn) {
-            retryBtn.style.display = "none";
-        }
-        return;
-    }
+    const retryText = document.getElementById("retryAvailabilityText");
 
+if (!backupId) {
+    if (retryText) {
+        retryText.innerText = "Retry status: Not checked";
+    }
+    if (retryBtn) {
+        retryBtn.style.display = "none";
+    }
+    return;
+}
     const retryInfo = await checkRetryAvailability(backupId);
     console.log("Selected backup retry info:", retryInfo);
 
@@ -1569,7 +1570,6 @@ async function loadRestoreHistory() {
         tableBody.innerHTML = result.history
             .slice()
             .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
-            .reverse()
             .map(item => {
                 const status = item.status || "unknown";
                 const statusBg =
@@ -1841,16 +1841,15 @@ async function loadOverviewStats() {
 
         const history = data.history;
 
-        const totalBackups = history.length;
-
-        const successfulBackups = history.filter(h => h.status === "completed").length;
-
-        const failedBackups = history.filter(h => h.status === "failed").length;
+        const uniqueBackups = new Set(history.map(item => item.backupId));
+const totalBackups = uniqueBackups.size;
+const successfulBackups = history.filter(item => item.status === "completed").length;
+const failedBackups = history.filter(item => item.status === "failed").length;
 
         document.getElementById("totalBackupsCount").textContent = totalBackups;
-        document.getElementById("successfulBackupsCount").textContent = successfulBackups;
-        document.getElementById("failedBackupsCount").textContent = failedBackups;
-        document.getElementById("totalBackedUpFilesCount").textContent = totalBackups;
+document.getElementById("successfulBackupsCount").textContent = successfulBackups;
+document.getElementById("failedBackupsCount").textContent = failedBackups;
+document.getElementById("totalBackedUpFilesCount").textContent = history.length;
 
     } catch (error) {
         console.error("Overview stats error:", error);

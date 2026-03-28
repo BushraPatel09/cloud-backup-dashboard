@@ -1,6 +1,12 @@
 import pool from "../db.js";
 
 export async function addBackupHistoryToDb(record) {
+    
+    if (!record.userEmail) {
+        throw new Error("User email is required for backup history");
+    }
+
+
     const query = `
         INSERT INTO backup_history (
             user_email,
@@ -16,7 +22,7 @@ export async function addBackupHistoryToDb(record) {
     `;
 
     const values = [
-        record.userEmail || null,
+        record.userEmail,
         record.backupId || null,
         record.fileName || null,
         record.relativePath || null,

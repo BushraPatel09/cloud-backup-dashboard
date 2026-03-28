@@ -497,22 +497,18 @@ app.get("/api/test-backup-history", (req, res) => {
         });
     }
 });
-app.get("/api/backup/history", async (req, res) => {
+app.get("/api/backup/history", requireAuth, async (req, res) => {
     try {
-        const userEmail = req.session.user?.email || null;
-        let history = [];
+        const userEmail = req.session.user?.email;
 
-        if (userEmail) {
-            try {
-                history = await getBackupHistoryFromDb(userEmail);
-            } catch (dbError) {
-                console.error("DB history read failed, falling back to JSON:", dbError.message);
-            }
+        if (!userEmail) {
+            return res.status(401).json({
+                success: false,
+                message: "User not authenticated"
+            });
         }
 
-        if ((!history || history.length === 0) && userEmail) {
-            history = readBackupHistory().filter(item => item.userEmail === userEmail || !item.userEmail);
-        }
+        const history = await getBackupHistoryFromDb(userEmail);
 
         res.json({
             success: true,
