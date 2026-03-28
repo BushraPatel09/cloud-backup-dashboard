@@ -51,6 +51,7 @@ import {
 dotenv.config();
 
 const app = express();
+app.set("trust proxy", 1);
 const upload = multer({ storage: multer.memoryStorage() });
 
 // --------------------
@@ -71,21 +72,24 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // --------------------
 // MIDDLEWARE
 // --------------------
-app.use(cors({
-    origin: "http://127.0.0.1:5500",
-    credentials: true
-}));
+// app.use(cors({
+//     origin: "http://127.0.0.1:5500",
+//     credentials: true
+// }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "backup-secret",
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
-        secure: false,
-        httpOnly: true
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 1000 * 60 * 60 * 24
     }
 }));
 
@@ -209,7 +213,16 @@ app.get("/auth/google/callback", async (req, res) => {
         console.log("✅ Google User:", userData.email);
         console.log("🔐 JWT Issued");
 
-        res.redirect("/dashboard");
+        req.session.save((err) => {
+    if (err) {
+        console.error("Session save error:", err);
+        return res.status(500).json({
+            error: "Failed to save session"
+        });
+    }
+
+    res.redirect("/dashboard");
+});
 
     } catch (error) {
         console.error("Google OAuth Error:", error);
