@@ -499,7 +499,17 @@ app.get("/api/test-backup-history", (req, res) => {
 });
 app.get("/api/backup/history", async (req, res) => {
     try {
-        const history = await getBackupHistoryFromDb();
+        let history = [];
+
+        try {
+            history = await getBackupHistoryFromDb();
+        } catch (dbError) {
+            console.error("DB history read failed, falling back to JSON:", dbError.message);
+        }
+
+        if (!history || history.length === 0) {
+            history = readBackupHistory();
+        }
 
         res.json({
             success: true,
