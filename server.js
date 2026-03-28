@@ -10,7 +10,7 @@ import { fileURLToPath } from "url";
 import multer from "multer";
 import dotenv from "dotenv";
 
-
+import { getBackupHistoryFromDb } from "./backup/backupHistoryDb.js";
 import { readOverviewStats, writeOverviewStats } from "./backup/overviewStatsManager.js";
 import { startBackup, requestStopBackup, getStopBackupStatus } from "./services/backupEngine.js";
 import restoreHistoryRoutes from "./routes/restoreHistory.js";
@@ -497,9 +497,9 @@ app.get("/api/test-backup-history", (req, res) => {
         });
     }
 });
-app.get("/api/backup/history", (req, res) => {
+app.get("/api/backup/history", async (req, res) => {
     try {
-        const history = readBackupHistory();
+        const history = await getBackupHistoryFromDb();
 
         res.json({
             success: true,
