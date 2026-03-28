@@ -982,7 +982,9 @@ fetch("/api/google-user", {
     }
 </script>
 <script>
-fetch("/api/restore/dashboard")
+fetch("/api/restore/dashboard", {
+    credentials: "include"
+})
   .then(res => res.json())
   .then(data => {
     if (!data.success) return;
