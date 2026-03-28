@@ -748,18 +748,22 @@ app.post("/api/upload-selected-folder", requireAuth, upload.array("files"), asyn
         // ===== TEMP DEBUG LOGS END =====
 
         const result = await uploadSelectedFolder(req, files, relativePaths, existingBackupId, provider);
+
+        const userEmail = req.session.user?.email || "unknown";
+
         if (result?.uploadedFiles && result.uploadedFiles.length > 0) {
-    for (const file of result.uploadedFiles) {
-        await addBackupHistoryToDb({
-            backupId: result.backupId,
-            fileName: file.fileName || file.originalname || "Unknown File",
-            relativePath: file.relativePath || file.storagePath || file.fileName || "Unknown Path",
-            size: file.size || 0,
-            uploadedAt: new Date().toISOString(),
-            status: file.status || "completed"
-        });
-    }
-}
+            for (const file of result.uploadedFiles) {
+                await addBackupHistoryToDb({
+                    userEmail,
+                    backupId: result.backupId,
+                    fileName: file.fileName || file.originalname || "Unknown File",
+                    relativePath: file.relativePath || file.storagePath || file.fileName || "Unknown Path",
+                    size: file.size || 0,
+                    uploadedAt: new Date().toISOString(),
+                    status: file.status || "completed"
+                });
+            }
+        }
         // ===== SAVE BACKUP HISTORY START =====
         // ===== SAVE BACKUP HISTORY START =====
 
@@ -767,9 +771,9 @@ app.post("/api/upload-selected-folder", requireAuth, upload.array("files"), asyn
         // ===== SAVE BACKUP HISTORY END =====
 
         res.json({
-    ...result,
-    provider,
-    message: result.stopped
+        ...result,
+        provider,
+        message: result.stopped
         ? "Backup stopped by user"
         : result.status === "completed_with_failures"
             ? "Backup completed with some failed files"
