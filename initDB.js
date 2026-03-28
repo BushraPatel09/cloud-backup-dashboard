@@ -5,6 +5,7 @@ async function initDB() {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS backup_history (
                 id SERIAL PRIMARY KEY,
+                user_email TEXT,
                 backup_id TEXT,
                 file_name TEXT,
                 relative_path TEXT,
@@ -12,6 +13,11 @@ async function initDB() {
                 uploaded_at TIMESTAMP,
                 status TEXT
             );
+        `);
+
+        await pool.query(`
+            ALTER TABLE backup_history
+            ADD COLUMN IF NOT EXISTS user_email TEXT;
         `);
 
         console.log("✅ backup_history table ready");
