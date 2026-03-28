@@ -499,16 +499,19 @@ app.get("/api/test-backup-history", (req, res) => {
 });
 app.get("/api/backup/history", async (req, res) => {
     try {
+        const userEmail = req.session.user?.email || null;
         let history = [];
 
-        try {
-            history = await getBackupHistoryFromDb();
-        } catch (dbError) {
-            console.error("DB history read failed, falling back to JSON:", dbError.message);
+        if (userEmail) {
+            try {
+                history = await getBackupHistoryFromDb(userEmail);
+            } catch (dbError) {
+                console.error("DB history read failed, falling back to JSON:", dbError.message);
+            }
         }
 
-        if (!history || history.length === 0) {
-            history = readBackupHistory();
+        if ((!history || history.length === 0) && userEmail) {
+            history = readBackupHistory().filter(item => item.userEmail === userEmail || !item.userEmail);
         }
 
         res.json({
@@ -752,6 +755,7 @@ app.post("/api/upload-selected-folder", requireAuth, upload.array("files"), asyn
         const userEmail = req.session.user?.email || "unknown";
 
         if (result?.uploadedFiles && result.uploadedFiles.length > 0) {
+            console.log("Saving uploaded files to DB:", result.uploadedFiles.length);
             for (const file of result.uploadedFiles) {
                 await addBackupHistoryToDb({
                     userEmail,
